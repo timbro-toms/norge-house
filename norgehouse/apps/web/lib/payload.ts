@@ -109,6 +109,7 @@ interface SiteSettings {
   companyName?: string
   tagline?: string
   phone?: string
+  phoneSecondary?: string
   email?: string
   address?: string
   vatNumber?: string

@@ -20,7 +20,12 @@ export const SiteSettings: GlobalConfig = {
     {
       name: 'phone',
       type: 'text',
-      defaultValue: '+371 XXXXXXXX',
+      defaultValue: '+371 25 901 010',
+    },
+    {
+      name: 'phoneSecondary',
+      type: 'text',
+      label: 'Secondary Phone',
     },
     {
       name: 'email',
@@ -30,7 +35,7 @@ export const SiteSettings: GlobalConfig = {
     {
       name: 'address',
       type: 'textarea',
-      defaultValue: 'Cēsis, Latvia',
+      defaultValue: 'Sū iela 10, Mārupe, LV-2166, Latvia',
     },
     {
       name: 'vatNumber',
