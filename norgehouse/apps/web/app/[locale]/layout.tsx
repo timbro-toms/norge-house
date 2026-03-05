@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import { getMessages } from 'next-intl/server'
 import { Montserrat, Open_Sans } from 'next/font/google'
+import Script from 'next/script'
 import { getNavigation, getSiteSettings } from '@/lib/payload'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
@@ -58,9 +59,10 @@ export default async function LocaleLayout({
     },
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Cēsis',
+      addressLocality: 'Mārupe',
       addressCountry: 'LV',
-      streetAddress: settings?.address,
+      postalCode: 'LV-2166',
+      streetAddress: 'Sū iela 10',
     },
     sameAs: [
       settings?.socialLinks?.facebook,
@@ -70,6 +72,9 @@ export default async function LocaleLayout({
     ].filter(Boolean),
   }
 
+  const gaId = settings?.googleAnalyticsId
+  const plausibleDomain = settings?.plausibleDomain
+
   return (
     <html lang={locale} className={`${montserrat.variable} ${openSans.variable}`}>
       <head>
@@ -77,8 +82,26 @@ export default async function LocaleLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
         />
+        {plausibleDomain && (
+          <script
+            defer
+            data-domain={plausibleDomain}
+            src="https://plausible.io/js/script.js"
+          />
+        )}
       </head>
       <body className="min-h-screen flex flex-col">
+        {gaId && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${gaId}')`}
+            </Script>
+          </>
+        )}
         <NextIntlClientProvider messages={messages}>
           <Header locale={locale} navigation={navigation} settings={settings} />
           <main className="flex-1">{children}</main>

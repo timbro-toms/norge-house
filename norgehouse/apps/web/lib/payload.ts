@@ -120,6 +120,7 @@ interface SiteSettings {
     youtube?: string
   }
   defaultOgImage?: MediaItem
+  googleAnalyticsId?: string
   plausibleDomain?: string
 }
 
