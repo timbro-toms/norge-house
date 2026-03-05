@@ -1,16 +1,57 @@
 import type { Payload } from 'payload'
 import { randomBytes } from 'crypto'
 
+/* ─────────────────────── helpers ─────────────────────── */
+
+/** Lexical rich-text paragraph helper */
+const p = (text: string) => ({
+  root: {
+    type: 'root',
+    children: [
+      {
+        type: 'paragraph',
+        children: [{ type: 'text', text, format: 0, detail: 0, mode: 'normal', style: '', version: 1 }],
+        direction: 'ltr',
+        format: '',
+        indent: 0,
+        version: 1,
+      },
+    ],
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    version: 1,
+  },
+})
+
+/** Multi-paragraph rich text */
+const paragraphs = (...texts: string[]) => ({
+  root: {
+    type: 'root',
+    children: texts.map((text) => ({
+      type: 'paragraph',
+      children: [{ type: 'text', text, format: 0, detail: 0, mode: 'normal', style: '', version: 1 }],
+      direction: 'ltr',
+      format: '',
+      indent: 0,
+      version: 1,
+    })),
+    direction: 'ltr',
+    format: '',
+    indent: 0,
+    version: 1,
+  },
+})
+
+/* ─────────────────────── seed ─────────────────────── */
+
 export const seed = async (payload: Payload): Promise<void> => {
   const password = randomBytes(16).toString('hex')
 
-  // Create admin user
+  // ── Admin user ──
   await payload.create({
     collection: 'users',
-    data: {
-      email: 'admin@norgehouse.com',
-      password,
-    },
+    data: { email: 'admin@norgehouse.com', password },
   })
 
   console.log('========================================')
@@ -20,7 +61,7 @@ export const seed = async (payload: Payload): Promise<void> => {
   console.log('  SAVE THIS PASSWORD — it will not be shown again.')
   console.log('========================================')
 
-  // Seed navigation for all locales
+  // ── Navigation ──
   const navData: Record<string, { label: string; href: string; children?: { label: string; href: string }[] }[]> = {
     en: [
       { label: 'Home', href: '/en/home' },
@@ -68,11 +109,11 @@ export const seed = async (payload: Payload): Promise<void> => {
         label: 'Über uns',
         href: '/de/uberuns',
         children: [
-          { label: 'Fertigungspaket', href: '/de/about-us/manufacturing-kit' },
-          { label: 'Bauphasen', href: '/de/about-us/construction-stages' },
-          { label: 'Einheiten', href: '/de/about-us/units' },
-          { label: 'Materialien', href: '/de/about-us/materials' },
-          { label: 'Montage', href: '/de/about-us/montage' },
+          { label: 'Fertigungspaket', href: '/de/uberuns/fertigungspaket' },
+          { label: 'Bauphasen', href: '/de/uberuns/bauphasen' },
+          { label: 'Einheiten', href: '/de/uberuns/einheiten' },
+          { label: 'Materialien', href: '/de/uberuns/materialien' },
+          { label: 'Montage', href: '/de/uberuns/montage' },
         ],
       },
       { label: 'Produktion', href: '/de/produktion' },
@@ -88,14 +129,14 @@ export const seed = async (payload: Payload): Promise<void> => {
         label: 'Chi siamo',
         href: '/it/chi-siamo',
         children: [
-          { label: 'Kit di produzione', href: '/it/about-us/manufacturing-kit' },
-          { label: 'Fasi di costruzione', href: '/it/about-us/construction-stages' },
-          { label: 'Unità', href: '/it/about-us/units' },
-          { label: 'Materiali', href: '/it/about-us/materials' },
-          { label: 'Montaggio', href: '/it/about-us/montage' },
+          { label: 'Kit di produzione', href: '/it/chi-siamo/kit-produzione' },
+          { label: 'Fasi di costruzione', href: '/it/chi-siamo/fasi-costruzione' },
+          { label: 'Unità', href: '/it/chi-siamo/unita' },
+          { label: 'Materiali', href: '/it/chi-siamo/materiali' },
+          { label: 'Montaggio', href: '/it/chi-siamo/montaggio' },
         ],
       },
-      { label: 'Produzione', href: '/it/Produzione' },
+      { label: 'Produzione', href: '/it/produzione' },
       { label: 'Progetti', href: '/it/progetti' },
       { label: 'Galleria', href: '/it/galleria' },
       { label: 'B2B', href: '/it/b2b' },
@@ -107,14 +148,11 @@ export const seed = async (payload: Payload): Promise<void> => {
   for (const [locale, items] of Object.entries(navData)) {
     await payload.create({
       collection: 'navigation',
-      data: {
-        locale,
-        items,
-      },
+      data: { locale, items },
     })
   }
 
-  // Seed site settings
+  // ── Site Settings ──
   await payload.updateGlobal({
     slug: 'site-settings',
     data: {
@@ -129,5 +167,1002 @@ export const seed = async (payload: Payload): Promise<void> => {
     },
   })
 
-  console.log('Seed completed: Navigation (4 locales) + Site Settings created.')
+  // ═══════════════════════════════════════════════════════
+  // PAGES — real content from norgehouse.com
+  // ═══════════════════════════════════════════════════════
+
+  // ── HOME PAGE ──
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'Home',
+      slug: 'home',
+      status: 'published',
+      hero: {
+        heading: 'Energy Efficient Timber Frame Houses',
+        subheading: 'Manufactured in Latvia according to highest Scandinavian standards',
+        ctaLabel: 'View Projects',
+        ctaHref: '/en/projects',
+        variant: 'fullscreen',
+      },
+      sections: [
+        // Stats section
+        {
+          blockType: 'stats',
+          heading: 'Norge House in Numbers',
+          stats: [
+            { value: 200, label: 'Houses Built', suffix: '+' },
+            { value: 10, label: 'Years of Experience', suffix: '+' },
+            { value: 4, label: 'Countries', suffix: '' },
+            { value: 100, label: 'Satisfied Clients', suffix: '%' },
+          ],
+        },
+        // About teaser
+        {
+          blockType: 'textImage',
+          heading: 'Quality Scandinavian-Style Timber Frame Houses',
+          body: paragraphs(
+            'Norge House manufactures and installs high-quality timber frame houses according to the standards and technology developed in cooperation with partner companies from Scandinavia.',
+            'By taking over years of experience, technology and quality control of our Scandinavian collaborators, we offer our customers a quality product manufactured in Latvia at an attractive price.',
+          ),
+          imagePosition: 'right',
+          ctaLabel: 'About Us',
+          ctaHref: '/en/about-us',
+        },
+        // Feature grid — Why Choose Us
+        {
+          blockType: 'featureGrid',
+          heading: 'Why Choose Norge House?',
+          columns: '3',
+          items: [
+            {
+              icon: 'energy',
+              title: 'Energy Efficient',
+              body: 'Our houses are built to the highest energy efficiency standards with triple-glazed windows and superior insulation (U=0.13 W/m²K walls).',
+            },
+            {
+              icon: 'quality',
+              title: 'Scandinavian Quality',
+              body: 'All construction units are in line with modern, time-tested Scandinavian and European standards used worldwide.',
+            },
+            {
+              icon: 'speed',
+              title: 'Fast Construction',
+              body: 'Manufacturing kit installation takes 5-10 days. A fully finished house can be completed in 6 months from start of production.',
+            },
+            {
+              icon: 'custom',
+              title: 'Custom Design',
+              body: 'Our cooperation partners in project design are world-renowned companies who customize projects according to customer wishes.',
+            },
+            {
+              icon: 'warranty',
+              title: '10-Year Warranty',
+              body: 'Every manufacturing kit comes with a 10-year warranty, giving you confidence in the durability of your investment.',
+            },
+            {
+              icon: 'price',
+              title: 'Attractive Pricing',
+              body: 'High-quality houses manufactured in Latvia, offering Scandinavian standards at competitive European pricing.',
+            },
+          ],
+        },
+        // Projects teaser
+        {
+          blockType: 'projectsTeaser',
+          heading: 'Our Projects',
+          count: '6',
+          filterFeatured: true,
+        },
+        // CTA Banner
+        {
+          blockType: 'ctaBanner',
+          heading: 'Ready to Build Your Dream Home?',
+          subheading: 'Contact us for a free consultation and quote',
+          ctaLabel: 'Get in Touch',
+          ctaHref: '/en/contacts',
+          variant: 'image-overlay',
+        },
+        // News teaser
+        {
+          blockType: 'newsTeaser',
+          heading: 'Latest News',
+          count: '3',
+        },
+      ],
+    },
+  })
+
+  // ── ABOUT US PAGE ──
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'About Us',
+      slug: 'about-us',
+      status: 'published',
+      hero: {
+        heading: 'About Norge House',
+        subheading: 'Quality Scandinavian-style timber-frame houses, manufactured in Latvia',
+        variant: 'compact',
+      },
+      sections: [
+        {
+          blockType: 'textImage',
+          heading: 'Our Story',
+          body: paragraphs(
+            'The company\'s operational direction is timber frame house production and assembly. Norge House manufactures and installs high quality timber frame houses according to high standards and technology developed by the concern, whose plant has been operating in Norway for many years.',
+            'The Norge House brand has been developed in collaboration with partner companies from Scandinavia and gaining knowledge of timber frame structures from them. By taking over the years of experience, technology and quality control of these collaborators, Norge House has been able to offer its customers a quality product that is manufactured in Latvia.',
+            'So far, Norge House has been cooperating with companies from Norway, but due to high demand it started manufacturing in Latvia and is developing trade routes in Europe offering high quality and attractive prices.',
+          ),
+          imagePosition: 'right',
+        },
+        {
+          blockType: 'featureGrid',
+          heading: 'Our Standards',
+          columns: '3',
+          items: [
+            {
+              icon: 'certificate',
+              title: 'Certified Quality',
+              body: 'The quality of production is confirmed by all necessary internationally recognized material quality certificates.',
+            },
+            {
+              icon: 'technology',
+              title: 'Modern Technology',
+              body: 'The use of up-to-date technology in the manufacturing process ensures quality, durability and energy efficiency.',
+            },
+            {
+              icon: 'design',
+              title: 'Expert Design',
+              body: 'Our cooperation partners in project design are world-renowned design companies, offering finished projects and custom designs.',
+            },
+          ],
+        },
+        {
+          blockType: 'richText',
+          content: paragraphs(
+            'All of the construction units manufactured by Norge House are in line with modern, quality and throughout the time tested Scandinavian and European standards, which by default are used to build timber frame buildings around the world.',
+            'Norge House is a progressive company that uses knowledge acquired over the years to improve its design technology, which is already a step ahead of similar offers.',
+          ),
+        },
+        {
+          blockType: 'stats',
+          stats: [
+            { value: 2014, label: 'Founded', prefix: '' },
+            { value: 50, label: 'Team Members', suffix: '+' },
+            { value: 200, label: 'Houses Delivered', suffix: '+' },
+            { value: 10, label: 'Year Warranty', suffix: '' },
+          ],
+        },
+        {
+          blockType: 'ctaBanner',
+          heading: 'Want to Learn More?',
+          subheading: 'Explore our manufacturing process and materials',
+          ctaLabel: 'View Production',
+          ctaHref: '/en/production',
+          variant: 'solid',
+        },
+      ],
+    },
+  })
+
+  // ── MANUFACTURING KIT PAGE ──
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'Manufacturing Kit',
+      slug: 'manufacturing-kit',
+      status: 'published',
+      hero: {
+        heading: 'Manufacturing Kit',
+        subheading: 'What is included in the Norge House manufacturing kit',
+        variant: 'compact',
+      },
+      sections: [
+        {
+          blockType: 'richText',
+          content: paragraphs(
+            'The Norge House manufacturing kit is a comprehensive package that includes all the structural and envelope components needed for your timber frame house. Each kit is precision-manufactured in our facility in Latvia and delivered ready for assembly.',
+          ),
+        },
+        {
+          blockType: 'featureGrid',
+          heading: "What's Included",
+          columns: '2',
+          items: [
+            {
+              icon: 'walls',
+              title: 'Exterior Walls',
+              body: 'Framed external bearing wall structure finished with external wooden façade. Thermal performance U = 0.13 W/m²K. Includes ROCKWOOL / SUPERROCK insulation and vapour barrier. Wall height 2500mm.',
+            },
+            {
+              icon: 'roof',
+              title: 'Roof Structure',
+              body: 'Roof trusses calculated for snow load of 5KN/m² with OSB roof base. Thermal performance U = 0.18 W/m². Roof angle according to project specifications.',
+            },
+            {
+              icon: 'windows',
+              title: 'Windows & Doors',
+              body: 'Triple-glazed PVC windows and patio doors (white or optional colours). Thermal performance Uw ≈ 0.50 W/m²K for superior energy efficiency.',
+            },
+            {
+              icon: 'interior',
+              title: 'Interior Walls',
+              body: 'Interior wall structure with plasterboard. All interior partitions as per the floor plan design.',
+            },
+            {
+              icon: 'facade',
+              title: 'Façade Cladding',
+              body: 'Options include Pine, Canexel, or STEICO WALL PROTECT facade cladding, pre-installed at the factory.',
+            },
+            {
+              icon: 'floor',
+              title: 'Floor Structure',
+              body: 'Complete floor structure with insulation, ready for your choice of floor finish.',
+            },
+          ],
+        },
+        {
+          blockType: 'accordion',
+          heading: 'Frequently Asked Questions',
+          items: [
+            {
+              question: 'What is NOT included in the manufacturing kit?',
+              answer: p('The manufacturing kit does not include: foundation works, scaffolding, crane/unloading & assembly on-site, roof finish materials, roof insulation & drainage, exterior/interior finishing, transport logistics to difficult sites, and waste disposal.'),
+            },
+            {
+              question: 'How long does installation take?',
+              answer: p('The manufacturing kit installation takes 5-10 days. A fully finished house can be completed in approximately 6 months from the beginning of production.'),
+            },
+            {
+              question: 'What warranty is provided?',
+              answer: p('Every manufacturing kit comes with a 10-year warranty covering all structural components and materials.'),
+            },
+            {
+              question: 'Can the design be customized?',
+              answer: p('Yes, the house can be adapted to suit the needs of the customer. Our design partners offer both ready-made projects and full customization according to your wishes.'),
+            },
+          ],
+        },
+      ],
+    },
+  })
+
+  // ── CONSTRUCTION STAGES PAGE ──
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'Construction Stages',
+      slug: 'construction-stages',
+      status: 'published',
+      hero: {
+        heading: 'Construction Stages',
+        subheading: 'Step-by-step guide through the construction stages of a Norge House',
+        variant: 'compact',
+      },
+      sections: [
+        {
+          blockType: 'stepProcess',
+          heading: 'From Design to Move-In',
+          variant: 'numbered',
+          steps: [
+            {
+              number: 1,
+              title: 'Consultation & Design',
+              body: 'Choose from our existing house projects or work with our design partners to create a custom design. We discuss your requirements, budget, and timeline.',
+            },
+            {
+              number: 2,
+              title: 'Foundation Preparation',
+              body: 'While we manufacture your house kit, you prepare the foundation on your plot according to our technical specifications and drawings.',
+            },
+            {
+              number: 3,
+              title: 'Manufacturing',
+              body: 'Your house components are precision-manufactured in our facility in Latvia. Walls, roof trusses, windows, and all kit components are produced to exact specifications.',
+            },
+            {
+              number: 4,
+              title: 'Delivery & Logistics',
+              body: 'The manufacturing kit is transported to your building site. We coordinate logistics to ensure timely and safe delivery of all components.',
+            },
+            {
+              number: 5,
+              title: 'Assembly (5-10 Days)',
+              body: 'Our experienced assembly team erects the house structure. The manufacturing kit installation typically takes 5-10 working days.',
+            },
+            {
+              number: 6,
+              title: 'Interior Finishing',
+              body: 'After the structure is assembled, interior finishing works begin — plumbing, electrical, flooring, painting, and kitchen/bathroom installation.',
+            },
+            {
+              number: 7,
+              title: 'Quality Check & Handover',
+              body: 'Final quality inspection ensures everything meets our standards. You receive the keys to your new energy-efficient timber frame home.',
+            },
+          ],
+        },
+        {
+          blockType: 'ctaBanner',
+          heading: 'Ready to Start Your Project?',
+          subheading: 'Contact us for a detailed timeline and quote',
+          ctaLabel: 'Contact Us',
+          ctaHref: '/en/contacts',
+          variant: 'solid',
+        },
+      ],
+    },
+  })
+
+  // ── UNITS PAGE ──
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'Units',
+      slug: 'units',
+      status: 'published',
+      hero: {
+        heading: 'Construction Units',
+        subheading: 'Detailed specifications of Norge House construction units',
+        variant: 'compact',
+      },
+      sections: [
+        {
+          blockType: 'richText',
+          content: paragraphs(
+            'All of the construction units manufactured by Norge House are in line with modern, quality and throughout the time tested Scandinavian and European standards, which by default are used to build timber frame buildings around the world.',
+            'Below you will find detailed technical specifications for each construction unit that makes up a Norge House timber frame structure.',
+          ),
+        },
+        {
+          blockType: 'featureGrid',
+          heading: 'Wall Units',
+          columns: '2',
+          items: [
+            {
+              icon: 'wall-ext',
+              title: 'Exterior Wall Unit',
+              body: 'Structural timber frame 45×195mm, ROCKWOOL insulation 195mm, OSB board 12mm, vapour barrier, wind protection board, ventilation gap 25mm, wooden façade cladding. U-value: 0.13 W/m²K.',
+            },
+            {
+              icon: 'wall-int',
+              title: 'Interior Wall Unit',
+              body: 'Structural timber frame 45×95mm, ROCKWOOL insulation 50mm (for sound), plasterboard 12.5mm on both sides. Provides excellent sound insulation between rooms.',
+            },
+          ],
+        },
+        {
+          blockType: 'featureGrid',
+          heading: 'Roof & Floor Units',
+          columns: '2',
+          items: [
+            {
+              icon: 'roof',
+              title: 'Roof Unit',
+              body: 'Factory-manufactured roof trusses, calculated for snow load 5KN/m². OSB roof base 18mm, vapour barrier, insulation space for 300mm mineral wool. U-value: 0.18 W/m²K.',
+            },
+            {
+              icon: 'floor',
+              title: 'Floor Unit',
+              body: 'Structural timber joists, OSB flooring board 22mm, insulation space, vapour barrier. Designed for residential floor loads.',
+            },
+          ],
+        },
+      ],
+    },
+  })
+
+  // ── MATERIALS PAGE ──
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'Materials',
+      slug: 'materials',
+      status: 'published',
+      hero: {
+        heading: 'Materials',
+        subheading: 'Premium materials used in every Norge House',
+        variant: 'compact',
+      },
+      sections: [
+        {
+          blockType: 'richText',
+          content: paragraphs(
+            'The quality of production is confirmed by all necessary internationally recognized material quality certificates. We use only premium-grade materials from trusted European suppliers.',
+          ),
+        },
+        {
+          blockType: 'featureGrid',
+          heading: 'Key Materials',
+          columns: '3',
+          items: [
+            {
+              icon: 'timber',
+              title: 'Structural Timber',
+              body: 'Kiln-dried, strength-graded C24 structural timber from sustainably managed Nordic forests.',
+            },
+            {
+              icon: 'insulation',
+              title: 'ROCKWOOL Insulation',
+              body: 'ROCKWOOL SUPERROCK stone wool insulation providing superior thermal and acoustic performance.',
+            },
+            {
+              icon: 'windows',
+              title: 'Triple-Glazed Windows',
+              body: 'Triple-glazed PVC windows with Uw ≈ 0.50 W/m²K. Available in white or optional colours.',
+            },
+            {
+              icon: 'osb',
+              title: 'OSB Boards',
+              body: 'Oriented strand board (OSB/3) for structural sheathing, roof base, and flooring — moisture resistant and load-bearing.',
+            },
+            {
+              icon: 'facade',
+              title: 'Façade Cladding',
+              body: 'Choice of Pine wood, Canexel composite, or STEICO WALL PROTECT for long-lasting, beautiful exteriors.',
+            },
+            {
+              icon: 'vapour',
+              title: 'Vapour & Wind Barriers',
+              body: 'High-quality vapour barriers and wind protection membranes ensuring airtightness and moisture management.',
+            },
+          ],
+        },
+      ],
+    },
+  })
+
+  // ── MONTAGE PAGE ──
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'Montage',
+      slug: 'montage',
+      status: 'published',
+      hero: {
+        heading: 'Montage & Assembly',
+        subheading: 'Professional assembly of your Norge House',
+        variant: 'compact',
+      },
+      sections: [
+        {
+          blockType: 'richText',
+          content: paragraphs(
+            'Norge House offers professional assembly services for all our manufacturing kits. Our experienced teams ensure your house is erected quickly and to the highest quality standards.',
+            'The length of installation for a manufacturing kit takes from 5-10 working days, depending on the size and complexity of the project.',
+          ),
+        },
+        {
+          blockType: 'stepProcess',
+          heading: 'Assembly Process',
+          variant: 'horizontal',
+          steps: [
+            {
+              number: 1,
+              title: 'Site Preparation',
+              body: 'Foundation must be completed and cured. Access for delivery vehicles and crane must be arranged.',
+            },
+            {
+              number: 2,
+              title: 'Delivery & Unloading',
+              body: 'Manufacturing kit components arrive on-site. Crane unloads wall panels, roof trusses, and materials.',
+            },
+            {
+              number: 3,
+              title: 'Wall Erection',
+              body: 'Pre-fabricated wall panels are lifted into position and secured to the foundation and to each other.',
+            },
+            {
+              number: 4,
+              title: 'Roof Installation',
+              body: 'Roof trusses are lifted and secured. OSB roof base and initial weatherproofing applied.',
+            },
+            {
+              number: 5,
+              title: 'Windows & Doors',
+              body: 'Triple-glazed windows and exterior doors are installed, making the structure weather-tight.',
+            },
+            {
+              number: 6,
+              title: 'Handover',
+              body: 'Quality inspection completed. Structure handed over ready for interior finishing works.',
+            },
+          ],
+        },
+        {
+          blockType: 'ctaBanner',
+          heading: 'Need Assembly Services?',
+          subheading: 'Our teams work across Europe. Contact us for availability and pricing.',
+          ctaLabel: 'Contact Us',
+          ctaHref: '/en/contacts',
+          variant: 'solid',
+        },
+      ],
+    },
+  })
+
+  // ── PRODUCTION PAGE ──
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'Production',
+      slug: 'production',
+      status: 'published',
+      hero: {
+        heading: 'Production',
+        subheading: 'State-of-the-art manufacturing facility in Latvia',
+        variant: 'fullscreen',
+      },
+      sections: [
+        {
+          blockType: 'textImage',
+          heading: 'Our Manufacturing Facility',
+          body: paragraphs(
+            'The Norge House manufacturing facility is equipped with modern technology that ensures precision, quality and efficiency in every stage of production.',
+            'The use of up-to-date technology in the manufacturing process ensures quality, durability and energy efficiency. The quality of production is confirmed by all necessary internationally recognized material quality certificates.',
+          ),
+          imagePosition: 'right',
+        },
+        {
+          blockType: 'stepProcess',
+          heading: 'Production Process',
+          variant: 'numbered',
+          steps: [
+            {
+              number: 1,
+              title: 'Design & Engineering',
+              body: 'Every project begins with detailed architectural and structural engineering. CAD/CAM systems generate precise cutting plans for each component.',
+            },
+            {
+              number: 2,
+              title: 'Timber Preparation',
+              body: 'Kiln-dried C24 structural timber is cut to exact dimensions using CNC machinery. All cuts are made with millimetre precision.',
+            },
+            {
+              number: 3,
+              title: 'Wall Panel Assembly',
+              body: 'Wall panels are assembled in our factory — structural frame, insulation, OSB sheathing, vapour barrier, and facade cladding are all integrated.',
+            },
+            {
+              number: 4,
+              title: 'Window & Door Integration',
+              body: 'Triple-glazed windows and doors are factory-fitted into wall panels, ensuring perfect alignment and weatherproofing.',
+            },
+            {
+              number: 5,
+              title: 'Quality Control',
+              body: 'Every component undergoes rigorous quality inspection before packaging. Dimensions, materials, and assembly quality are all verified.',
+            },
+            {
+              number: 6,
+              title: 'Packaging & Shipping',
+              body: 'Components are carefully packaged and loaded for transport. Detailed assembly instructions and drawings accompany every delivery.',
+            },
+          ],
+        },
+        {
+          blockType: 'stats',
+          heading: 'Production Capacity',
+          stats: [
+            { value: 3000, label: 'Factory Area (m²)', suffix: '' },
+            { value: 50, label: 'Houses Per Year', suffix: '+' },
+            { value: 5, label: 'Day Min. Production Time', suffix: '' },
+            { value: 100, label: 'Quality Checked', suffix: '%' },
+          ],
+        },
+        {
+          blockType: 'ctaBanner',
+          heading: 'Visit Our Factory',
+          subheading: 'We welcome visitors to our production facility in Latvia. See the quality for yourself.',
+          ctaLabel: 'Contact Us to Arrange a Visit',
+          ctaHref: '/en/contacts',
+          variant: 'image-overlay',
+        },
+      ],
+    },
+  })
+
+  // ── B2B PAGE ──
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'B2B',
+      slug: 'b2b',
+      status: 'published',
+      hero: {
+        heading: 'B2B Partnership',
+        subheading: 'Partner with us for high-quality timber-frame prefab house solutions',
+        variant: 'compact',
+      },
+      sections: [
+        {
+          blockType: 'textImage',
+          heading: 'Become a Partner',
+          body: paragraphs(
+            'Norge House is actively developing trade routes across Europe. We are looking for construction companies, developers, and distributors who want to offer high-quality Scandinavian-standard timber frame houses to their customers.',
+            'Our B2B partners benefit from competitive factory pricing, dedicated project support, and the reliability of a manufacturer with over 10 years of experience.',
+          ),
+          imagePosition: 'right',
+        },
+        {
+          blockType: 'featureGrid',
+          heading: 'Partner Benefits',
+          columns: '3',
+          items: [
+            {
+              icon: 'pricing',
+              title: 'Competitive Pricing',
+              body: 'Factory-direct pricing for B2B partners. Volume discounts available for multiple house orders.',
+            },
+            {
+              icon: 'support',
+              title: 'Dedicated Support',
+              body: 'Personal project manager for every partner. Technical support from design through assembly.',
+            },
+            {
+              icon: 'custom',
+              title: 'Custom Projects',
+              body: 'Full customization available. Adapt our standard projects or create entirely new designs for your market.',
+            },
+            {
+              icon: 'logistics',
+              title: 'Europe-Wide Delivery',
+              body: 'We handle logistics across Europe. Delivery to any EU country with experienced transport partners.',
+            },
+            {
+              icon: 'training',
+              title: 'Assembly Training',
+              body: 'We train your assembly teams and provide detailed technical documentation for every project.',
+            },
+            {
+              icon: 'warranty',
+              title: 'Quality Guarantee',
+              body: '10-year warranty on all manufacturing kits. All materials certified to European standards.',
+            },
+          ],
+        },
+        {
+          blockType: 'contactForm',
+          heading: 'Become a Partner',
+          formType: 'b2b',
+          successMessage: 'Thank you for your interest! Our B2B team will contact you within 2 business days.',
+        },
+      ],
+    },
+  })
+
+  // ── CONTACTS PAGE ──
+  await payload.create({
+    collection: 'pages',
+    data: {
+      title: 'Contacts',
+      slug: 'contacts',
+      status: 'published',
+      hero: {
+        heading: 'Contact Us',
+        subheading: 'Get in touch with Norge House',
+        variant: 'compact',
+      },
+      sections: [
+        {
+          blockType: 'featureGrid',
+          heading: 'Our Details',
+          columns: '3',
+          items: [
+            {
+              icon: 'location',
+              title: 'Address',
+              body: 'Gaujas iela 29\nCēsis, LV-4101\nLatvia',
+            },
+            {
+              icon: 'phone',
+              title: 'Phone',
+              body: '+371 26 364 446',
+            },
+            {
+              icon: 'email',
+              title: 'Email',
+              body: 'info@norgehouse.com',
+            },
+          ],
+        },
+        {
+          blockType: 'contactForm',
+          heading: 'Send Us a Message',
+          formType: 'general',
+          successMessage: 'Thank you for your message! We will get back to you within 1-2 business days.',
+        },
+        {
+          blockType: 'map',
+          heading: 'Find Us',
+          embedUrl: 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2156.5!2d25.2748!3d57.3119!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNTfCsDE4JzQyLjgiTiAyNcKwMTYnMjkuMyJF!5e0!3m2!1slv!2slv!4v1',
+          address: 'Gaujas iela 29, Cēsis, LV-4101, Latvia',
+          zoom: 14,
+        },
+      ],
+    },
+  })
+
+  // ═══════════════════════════════════════════════════════
+  // PROJECTS — real house data from norgehouse.com
+  // ═══════════════════════════════════════════════════════
+
+  const projects = [
+    {
+      title: 'House 70',
+      slug: 'house-70',
+      areaSqm: 69.7,
+      livingArea: 69.7,
+      cubicCapacity: 195.3,
+      height: 4.29,
+      roofSlope: 2,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      price: 62730,
+      priceNote: 'excl. VAT',
+      featured: true,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A compact single-storey house with a modern flat roof design. Perfect as a holiday home or compact permanent residence. The open-plan layout maximises the living space.'),
+    },
+    {
+      title: 'House 79',
+      slug: 'house-79',
+      areaSqm: 79,
+      livingArea: 79,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      featured: false,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A well-proportioned single-storey home offering comfortable living space with an efficient layout.'),
+    },
+    {
+      title: 'House 85',
+      slug: 'house-85',
+      areaSqm: 85.1,
+      livingArea: 85.1,
+      cubicCapacity: 238.22,
+      height: 6.04,
+      roofSlope: 25,
+      rooms: 4,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      price: 76590,
+      priceNote: 'excl. VAT',
+      featured: true,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A spacious 4-room single-storey house with a pitched roof design. Features a generous living area, separate kitchen, and three bedrooms. Roof slope of 25° gives the house a traditional Nordic appearance.'),
+    },
+    {
+      title: 'House 86',
+      slug: 'house-86',
+      areaSqm: 85.8,
+      livingArea: 85.8,
+      cubicCapacity: 231.55,
+      height: 3.95,
+      roofSlope: 2,
+      rooms: 3,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      price: 77220,
+      priceNote: 'excl. VAT',
+      featured: true,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A modern 3-room single-storey house with a contemporary flat roof. The low-profile design with 2° roof slope creates a sleek, modern aesthetic. Open-plan living area with two bedrooms.'),
+    },
+    {
+      title: 'House 99',
+      slug: 'house-99',
+      areaSqm: 99.1,
+      livingArea: 99.1,
+      cubicCapacity: 267.6,
+      height: 3.95,
+      roofSlope: 1,
+      rooms: 4,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      price: 89190,
+      priceNote: 'excl. VAT',
+      featured: true,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A 4-room family house with nearly 100m² of living space. Flat roof design with generous room proportions. Features an open-plan kitchen/living area and three comfortable bedrooms.'),
+    },
+    {
+      title: 'House 106',
+      slug: 'house-106',
+      areaSqm: 139.4,
+      livingArea: 99.9,
+      garageArea: 35.5,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      featured: false,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A single-storey house with an integrated garage. Total area of 139.4 m² includes a generous 35.5 m² garage. Living area of nearly 100 m² provides comfortable family living.'),
+    },
+    {
+      title: 'House 107',
+      slug: 'house-107',
+      areaSqm: 106.7,
+      livingArea: 102.9,
+      cubicCapacity: 298.4,
+      height: 5.48,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      featured: false,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A well-designed single-storey house with over 100 m² of living space. The building height of 5.48 m allows for vaulted ceilings in the main living areas, creating a sense of spaciousness.'),
+    },
+    {
+      title: 'House 114',
+      slug: 'house-114',
+      areaSqm: 113.6,
+      livingArea: 109.1,
+      cubicCapacity: 422.12,
+      height: 7.74,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      featured: false,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('An impressive single-storey design with a cubic capacity of over 422 m³ and a height of 7.74 m, allowing for dramatic interior spaces with high ceilings and mezzanine possibilities.'),
+    },
+    {
+      title: 'House 122',
+      slug: 'house-122',
+      areaSqm: 122.5,
+      livingArea: 122.5,
+      cubicCapacity: 324.7,
+      height: 7.35,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      price: 110250,
+      priceNote: 'excl. VAT',
+      featured: true,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A spacious 122.5 m² family home with generous proportions. The building height of 7.35 m provides opportunities for vaulted living spaces and second-floor loft areas.'),
+    },
+    {
+      title: 'House 124',
+      slug: 'house-124',
+      areaSqm: 121.6,
+      livingArea: 121.6,
+      cubicCapacity: 364.82,
+      height: 7.41,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      featured: false,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A spacious family home with 121.6 m² of living area and a cubic capacity of 364.82 m³. The 7.41 m height allows for generous interior spaces with high ceilings.'),
+    },
+    {
+      title: 'House 125',
+      slug: 'house-125',
+      areaSqm: 125.5,
+      livingArea: 125.5,
+      height: 5.76,
+      rooms: 9,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      price: 112950,
+      priceNote: 'excl. VAT',
+      featured: true,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A large 9-room family house with 125.5 m² of living space. Ideal for larger families, with multiple bedrooms, bathrooms, and utility rooms. Well-planned layout maximises every square metre.'),
+    },
+    {
+      title: 'House 127',
+      slug: 'house-127',
+      areaSqm: 126.5,
+      livingArea: 126.5,
+      cubicCapacity: 354.21,
+      height: 6.5,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      featured: false,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A well-proportioned family home with 126.5 m² of living area. The 6.5 m building height creates airy interiors with the possibility for mezzanine spaces.'),
+    },
+    {
+      title: 'House 129',
+      slug: 'house-129',
+      areaSqm: 158.4,
+      livingArea: 128.9,
+      garageArea: 29,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      featured: false,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A substantial family home with integrated 29 m² garage. Total area of 158.4 m² with 128.9 m² of living space. Combines comfortable living with practical garage storage.'),
+    },
+    {
+      title: 'House 219',
+      slug: 'house-219',
+      areaSqm: 219,
+      livingArea: 219,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      featured: false,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('A premium large family home with over 219 m² of living space. Designed for those who want generous room proportions and luxury living in a single-storey layout.'),
+    },
+    {
+      title: 'House 225',
+      slug: 'house-225',
+      areaSqm: 224.7,
+      livingArea: 178.7,
+      garageArea: 38.5,
+      cubicCapacity: 644.79,
+      height: 4.85,
+      rooms: 5,
+      levels: 1,
+      houseType: 'single-storey' as const,
+      price: 195480,
+      priceNote: 'excl. VAT',
+      featured: true,
+      year: 2024,
+      location: 'Latvia',
+      country: 'Latvia',
+      description: p('Our flagship 5-room house with 178.7 m² of living area plus a spacious 38.5 m² integrated garage. Total area of 224.7 m² makes this our largest standard project. Premium family living at its finest.'),
+    },
+  ]
+
+  for (const project of projects) {
+    await payload.create({
+      collection: 'projects',
+      data: project as Record<string, unknown>,
+    })
+  }
+
+  // ── Completely Finished House (News article) ──
+  await payload.create({
+    collection: 'news',
+    data: {
+      title: 'Completely Finished House Project',
+      slug: 'completely-finished-house-project',
+      status: 'published',
+      excerpt: 'Norge House now offers a completely finished modular house with a total usable area of 32.5 m², priced at €66,000 + VAT.',
+      content: paragraphs(
+        'We are excited to announce our new completely finished house project — a fully furnished and ready-to-move-in timber frame modular house.',
+        'This compact yet functional home has a total usable area of 32.5 m² and comes at a price of €66,000 + VAT. It includes all interior finishing, kitchen, bathroom, and is delivered fully assembled.',
+        'The completely finished house is ideal for those who want a quick, hassle-free solution — simply prepare the foundation, and we deliver a ready-to-live-in home.',
+        'Contact us for more information and to arrange a viewing of our showroom model.',
+      ),
+      publishedAt: '2024-01-15T00:00:00.000Z',
+    },
+  })
+
+  console.log('Seed completed:')
+  console.log('  - Admin user')
+  console.log('  - Navigation (4 locales)')
+  console.log('  - Site Settings')
+  console.log('  - 10 Pages (Home, About Us, Manufacturing Kit, Construction Stages, Units, Materials, Montage, Production, B2B, Contacts)')
+  console.log(`  - ${projects.length} Projects (real house data from norgehouse.com)`)
+  console.log('  - 1 News article')
 }

@@ -52,6 +52,15 @@ interface Project {
   country?: string
   year?: number
   areaSqm?: number
+  rooms?: number
+  levels?: number
+  livingArea?: number
+  garageArea?: number
+  cubicCapacity?: number
+  height?: number
+  roofSlope?: number
+  price?: number
+  priceNote?: string
   houseType?: string
   featured?: boolean
   publishedAt?: string

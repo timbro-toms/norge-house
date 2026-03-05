@@ -74,6 +74,56 @@ export const Projects: CollectionConfig = {
       label: 'Area (m²)',
     },
     {
+      name: 'rooms',
+      type: 'number',
+      label: 'Rooms',
+    },
+    {
+      name: 'levels',
+      type: 'number',
+      label: 'Levels',
+      defaultValue: 1,
+    },
+    {
+      name: 'livingArea',
+      type: 'number',
+      label: 'Living Area (m²)',
+    },
+    {
+      name: 'garageArea',
+      type: 'number',
+      label: 'Garage Area (m²)',
+    },
+    {
+      name: 'cubicCapacity',
+      type: 'number',
+      label: 'Cubic Capacity (m³)',
+    },
+    {
+      name: 'height',
+      type: 'number',
+      label: 'Height (m)',
+    },
+    {
+      name: 'roofSlope',
+      type: 'number',
+      label: 'Roof Slope (°)',
+    },
+    {
+      name: 'price',
+      type: 'number',
+      label: 'Manufacturing Kit Price (€)',
+    },
+    {
+      name: 'priceNote',
+      type: 'text',
+      label: 'Price Note',
+      localized: true,
+      admin: {
+        description: 'e.g. "excl. VAT" or "from"',
+      },
+    },
+    {
       name: 'houseType',
       type: 'select',
       options: [

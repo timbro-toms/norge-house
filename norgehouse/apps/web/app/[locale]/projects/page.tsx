@@ -80,10 +80,16 @@ export default async function ProjectsPage({ params, searchParams }: Props) {
                   {project.title}
                 </h3>
                 <div className="flex flex-wrap gap-4 text-sm text-brand-muted">
-                  {project.location && <span>{project.location}</span>}
                   {project.areaSqm && <span>{project.areaSqm} m²</span>}
-                  {project.year && <span>{project.year}</span>}
+                  {project.rooms && <span>{project.rooms} rooms</span>}
+                  {project.levels && <span>{project.levels === 1 ? '1 level' : `${project.levels} levels`}</span>}
                 </div>
+                {project.price && (
+                  <div className="mt-3 text-brand-primary font-bold text-lg">
+                    €{project.price.toLocaleString()}
+                    {project.priceNote && <span className="text-xs text-brand-muted font-normal ml-1">{project.priceNote}</span>}
+                  </div>
+                )}
               </div>
             </Link>
           ))}

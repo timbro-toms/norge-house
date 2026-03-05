@@ -59,16 +59,74 @@ export default async function ProjectDetailPage({ params }: Props) {
         )}
         <div className="relative z-10 container-page pb-12 text-white">
           <h1 className="text-4xl md:text-5xl font-heading font-bold mb-4">{project.title}</h1>
+          {project.price && (
+            <div className="text-2xl font-bold text-brand-primary mb-4">
+              €{project.price.toLocaleString()}
+              {project.priceNote && <span className="text-sm text-white/70 font-normal ml-2">{project.priceNote}</span>}
+            </div>
+          )}
           <div className="flex flex-wrap gap-6 text-lg opacity-90">
-            {project.location && <span>{project.location}</span>}
             {project.areaSqm && <span>{project.areaSqm} m²</span>}
-            {project.year && <span>{project.year}</span>}
+            {project.rooms && <span>{project.rooms} rooms</span>}
+            {project.levels && <span>{project.levels === 1 ? '1 level' : `${project.levels} levels`}</span>}
             {project.houseType && <span className="capitalize">{project.houseType.replace('-', ' ')}</span>}
           </div>
         </div>
       </section>
 
       <section className="container-page py-16">
+        {/* Specifications table */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+          {project.livingArea && (
+            <div className="bg-brand-light rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-brand-dark">{project.livingArea} m²</div>
+              <div className="text-sm text-brand-muted">Living Area</div>
+            </div>
+          )}
+          {project.areaSqm && project.areaSqm !== project.livingArea && (
+            <div className="bg-brand-light rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-brand-dark">{project.areaSqm} m²</div>
+              <div className="text-sm text-brand-muted">Total Area</div>
+            </div>
+          )}
+          {project.garageArea && (
+            <div className="bg-brand-light rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-brand-dark">{project.garageArea} m²</div>
+              <div className="text-sm text-brand-muted">Garage</div>
+            </div>
+          )}
+          {project.rooms && (
+            <div className="bg-brand-light rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-brand-dark">{project.rooms}</div>
+              <div className="text-sm text-brand-muted">Rooms</div>
+            </div>
+          )}
+          {project.levels && (
+            <div className="bg-brand-light rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-brand-dark">{project.levels}</div>
+              <div className="text-sm text-brand-muted">{project.levels === 1 ? 'Level' : 'Levels'}</div>
+            </div>
+          )}
+          {project.cubicCapacity && (
+            <div className="bg-brand-light rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-brand-dark">{project.cubicCapacity} m³</div>
+              <div className="text-sm text-brand-muted">Volume</div>
+            </div>
+          )}
+          {project.height && (
+            <div className="bg-brand-light rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-brand-dark">{project.height} m</div>
+              <div className="text-sm text-brand-muted">Height</div>
+            </div>
+          )}
+          {project.roofSlope != null && (
+            <div className="bg-brand-light rounded-lg p-4 text-center">
+              <div className="text-2xl font-bold text-brand-dark">{project.roofSlope}°</div>
+              <div className="text-sm text-brand-muted">Roof Slope</div>
+            </div>
+          )}
+        </div>
+
         {project.description && (
           <div className="prose max-w-3xl mb-12">
             {/* Rich text content would be rendered with a serializer */}
