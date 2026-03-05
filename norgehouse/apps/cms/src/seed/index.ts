@@ -1315,13 +1315,37 @@ export const seed = async (payload: Payload): Promise<void> => {
     })
   }
 
-  // ── Completely Finished House (News article) ──
-  await payload.create({
-    collection: 'news',
-    data: {
+  // ── News Articles ──
+  const newsArticles = [
+    {
+      title: 'Norge House Expands Production Facility',
+      slug: 'norge-house-expands-production-facility',
+      excerpt: 'To meet growing demand across Europe, Norge House has expanded its timber frame manufacturing facility in Latvia with new CNC equipment and increased capacity.',
+      content: paragraphs(
+        'Norge House is pleased to announce the expansion of our timber frame house manufacturing facility in Latvia. The investment includes new CNC cutting equipment, additional assembly lines, and expanded warehouse space for materials.',
+        'This expansion allows us to increase production capacity significantly, reducing lead times for our customers across Europe. The new CNC equipment ensures even higher precision in wall panel and roof truss manufacturing.',
+        'With growing demand from partners in Germany, Italy, the Netherlands, and Scandinavia, this expansion positions Norge House to deliver more projects while maintaining the quality standards our clients expect.',
+        'We invite potential partners and customers to visit our production facility and see the manufacturing process firsthand.',
+      ),
+      publishedAt: '2023-06-20T10:00:00.000Z',
+      tags: [{ tag: 'Company' }, { tag: 'Production' }],
+    },
+    {
+      title: 'New Modular House Line Launched',
+      slug: 'new-modular-house-line-launched',
+      excerpt: 'Norge House introduces a new line of modular houses — factory-built, fully transportable units from 22 m² to 54 m² that arrive ready for installation.',
+      content: paragraphs(
+        'We are excited to introduce our new modular house product line. Unlike our traditional timber frame kits that are assembled on-site, these modular units are fully constructed at our facility and delivered as complete, ready-to-install structures.',
+        'The modular line includes five models: Module 2 (22 m²), Module 3 (32.5 m²), Module 4 (43.7 m²), Module 5 (54.1 m²), and Module 35 (35 m²). Each can be configured for residential, commercial, or hospitality use.',
+        'Modular houses offer several advantages: faster delivery (2-4 weeks from order), minimal on-site work, and consistent factory-controlled quality. They are ideal for guest houses, holiday rentals, offices, or as a first home.',
+        'We have also added the Module Sauna 3 — a 32.1 m² unit combining traditional sauna facilities with comfortable living space. Contact us for pricing and availability.',
+      ),
+      publishedAt: '2023-11-08T09:00:00.000Z',
+      tags: [{ tag: 'Products' }, { tag: 'Modular' }],
+    },
+    {
       title: 'Completely Finished House Project',
       slug: 'completely-finished-house-project',
-      status: 'published',
       excerpt: 'Norge House now offers a completely finished modular house with a total usable area of 32.5 m², priced at €66,000 + VAT.',
       content: paragraphs(
         'We are excited to announce our new completely finished house project — a fully furnished and ready-to-move-in timber frame modular house.',
@@ -1330,8 +1354,86 @@ export const seed = async (payload: Payload): Promise<void> => {
         'Contact us for more information and to arrange a viewing of our showroom model.',
       ),
       publishedAt: '2024-01-15T00:00:00.000Z',
+      tags: [{ tag: 'Products' }, { tag: 'Modular' }],
     },
-  })
+    {
+      title: 'House 219 — Our Largest Two-Storey Project',
+      slug: 'house-219-largest-two-storey-project',
+      excerpt: 'Introducing House 219 — a spacious 169.8 m² two-storey family home with integrated garage, designed for comfort and energy efficiency.',
+      content: paragraphs(
+        'We are proud to present House 219, our largest two-storey project to date. With 169.8 m² of living space spread across two levels, this home is designed for families who need room to grow.',
+        'The ground floor features an open-plan living area, kitchen, and dining space, along with a built-in garage. The upper level offers three bedrooms, a family bathroom, and a private master suite with en-suite.',
+        'Like all Norge House projects, House 219 is manufactured as a precision timber frame kit at our facility. The assembly on-site takes approximately 5-7 working days, after which the weather-tight shell is ready for interior finishing.',
+        'House 219 is available as a construction kit or with our full finishing service. Visit our projects page for the floor plan and specifications.',
+      ),
+      publishedAt: '2024-05-22T08:00:00.000Z',
+      tags: [{ tag: 'Projects' }, { tag: 'Two-Storey' }],
+    },
+    {
+      title: 'Successful Delivery to Germany — House 127',
+      slug: 'successful-delivery-germany-house-127',
+      excerpt: 'Norge House has completed the manufacturing and delivery of House 127 to a client in Germany. The 126.5 m² single-storey home was assembled in just 4 working days.',
+      content: paragraphs(
+        'We are happy to share the successful completion of another international project — House 127 has been manufactured, delivered, and assembled for a client in Germany.',
+        'House 127 is a 126.5 m² single-storey home with an efficient layout featuring three bedrooms, two bathrooms, and a spacious open-plan living area. The entire construction kit was manufactured at our facility in Latvia.',
+        'Delivery was coordinated with our logistics partners, and the house kit arrived on-site in Germany on schedule. Our assembly team completed the full structure in just 4 working days, leaving the client with a weather-tight shell ready for interior finishing.',
+        'This project demonstrates our capability to deliver high-quality timber frame houses across Europe with reliable logistics and fast assembly times. If you are interested in a similar project, get in touch with us.',
+      ),
+      publishedAt: '2024-09-10T10:00:00.000Z',
+      tags: [{ tag: 'Projects' }, { tag: 'Delivery' }, { tag: 'Germany' }],
+    },
+    {
+      title: 'Norge House at Baltic Construction Exhibition 2025',
+      slug: 'norge-house-baltic-construction-exhibition-2025',
+      excerpt: 'Visit Norge House at the Baltic Construction Exhibition in Riga. See our latest modular and timber frame house solutions and meet the team.',
+      content: paragraphs(
+        'Norge House will be exhibiting at the Baltic Construction Exhibition in Riga this spring. This is one of the largest construction industry events in the Baltic region, attracting builders, architects, and developers from across Northern Europe.',
+        'At our stand, visitors will be able to explore our full range of timber frame house projects — from compact 25 m² units to spacious two-storey family homes over 170 m². We will also be showcasing our modular house line with detailed specifications and pricing.',
+        'Our team will be available to discuss partnership opportunities for construction companies, architects, and distributors looking to offer high-quality, affordable timber frame houses in their markets.',
+        'For meeting appointments or more information about our exhibition presence, please contact us at info@norgehouse.com.',
+      ),
+      publishedAt: '2025-02-18T09:00:00.000Z',
+      tags: [{ tag: 'Events' }, { tag: 'Exhibition' }],
+    },
+    {
+      title: 'New Payment Structure — Flexible Financing for Clients',
+      slug: 'new-payment-structure-flexible-financing',
+      excerpt: 'Norge House introduces a transparent 3-stage payment plan: 10% at contract signing, 50% during manufacturing, and 40% upon delivery and assembly.',
+      content: paragraphs(
+        'We understand that building a home is a significant investment. To make the process smoother and more transparent, Norge House has introduced a clear 3-stage payment structure for all projects.',
+        'Stage 1: 10% of the total amount is paid at the signing of the contract. This secures your project in our production schedule and covers initial design and planning work.',
+        'Stage 2: 50% of the total price is paid before manufacturing begins. This covers materials procurement and the factory production of your house kit.',
+        'Stage 3: The remaining 40% is paid once the construction kit is completed, delivered to the site, and assembled. You only pay the final instalment when you can see your house standing.',
+        'We also work with a partner bank that can provide financing solutions for qualified clients. Contact us to discuss your project and payment options.',
+      ),
+      publishedAt: '2025-06-05T08:00:00.000Z',
+      tags: [{ tag: 'Company' }, { tag: 'Financing' }],
+    },
+    {
+      title: 'Website Redesign — Welcome to the New norgehouse.com',
+      slug: 'website-redesign-welcome-new-norgehouse',
+      excerpt: 'We have launched our redesigned website with improved project browsing, an updated gallery, and easier navigation across all devices.',
+      content: paragraphs(
+        'Welcome to the newly redesigned norgehouse.com! We have rebuilt our website from the ground up to provide a better experience for our visitors and partners.',
+        'The new site features improved project pages with detailed specifications, floor plans, and high-quality images. You can now easily browse our full range of timber frame and modular houses, filter by size and type, and request quotes directly.',
+        'The website is now available in four languages — English, Latvian, German, and Italian — with localised navigation and content for each market we serve.',
+        'We will continue to update the site with new projects, gallery images, and news. Thank you for visiting, and we look forward to helping you build your dream home.',
+      ),
+      publishedAt: '2025-10-01T08:00:00.000Z',
+      tags: [{ tag: 'Company' }, { tag: 'Website' }],
+    },
+  ]
+
+  for (const article of newsArticles) {
+    await payload.create({
+      collection: 'news',
+      data: {
+        ...article,
+        status: 'published',
+        author: 'Norge House',
+      },
+    })
+  }
 
   console.log('Seed completed:')
   console.log('  - Admin user')
@@ -1340,5 +1442,5 @@ export const seed = async (payload: Payload): Promise<void> => {
   console.log('  - 10 Pages (Home, About Us, Manufacturing Kit, Construction Stages, Units, Materials, Montage, Production, B2B, Contacts)')
   console.log('  - Design partner: Z500')
   console.log(`  - ${projects.length} Projects (real house data from norgehouse.com)`)
-  console.log('  - 1 News article')
+  console.log(`  - ${newsArticles.length} News articles`)
 }
