@@ -1,0 +1,38 @@
+version: "3.9"
+
+services:
+  postgres:
+    ports:
+      - "5432:5432"
+
+  cms:
+    build:
+      context: ./apps/cms
+      target: development
+    ports:
+      - "3001:3001"
+    volumes:
+      - ./apps/cms/src:/app/src
+      - cms_media:/app/media
+    environment:
+      NODE_ENV: development
+    command: pnpm dev
+
+  web:
+    build:
+      context: ./apps/web
+      target: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./apps/web/app:/app/app
+      - ./apps/web/components:/app/components
+      - ./apps/web/lib:/app/lib
+      - ./apps/web/messages:/app/messages
+    environment:
+      NODE_ENV: development
+      NEXT_PUBLIC_PAYLOAD_URL: http://localhost:3001
+    command: pnpm dev
+
+volumes:
+  cms_media:

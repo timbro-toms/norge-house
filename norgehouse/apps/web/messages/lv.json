@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "home": "Sākums",
+    "aboutUs": "Par mums",
+    "manufacturingKit": "Ražošanas komplekts",
+    "constructionStages": "Būvniecības etapi",
+    "units": "Mezgli",
+    "materials": "Materiāli",
+    "montage": "Montāža",
+    "production": "Ražošana",
+    "projects": "Projekti",
+    "galleries": "Galerijas",
+    "b2b": "Partneriem",
+    "news": "Jaunumi",
+    "contacts": "Kontakti"
+  },
+  "common": {
+    "readMore": "Lasīt vairāk",
+    "viewAll": "Skatīt visus",
+    "viewProject": "Skatīt projektu",
+    "loadMore": "Ielādēt vairāk",
+    "backToList": "Atpakaļ uz sarakstu",
+    "learnMore": "Uzzināt vairāk",
+    "getInTouch": "Sazināties",
+    "requestQuote": "Pieprasīt cenu",
+    "noResults": "Nav rezultātu",
+    "close": "Aizvērt",
+    "next": "Nākamais",
+    "previous": "Iepriekšējais"
+  },
+  "contact": {
+    "title": "Sazinieties ar mums",
+    "name": "Vārds, uzvārds",
+    "email": "E-pasta adrese",
+    "phone": "Tālruņa numurs",
+    "country": "Valsts",
+    "subject": "Temats",
+    "message": "Ziņojums",
+    "howFound": "Kā jūs mūs atradāt?",
+    "submit": "Nosūtīt ziņojumu",
+    "sending": "Sūta...",
+    "success": "Paldies! Jūsu ziņojums ir nosūtīts. Mēs ar jums sazināsimies tuvākajā laikā.",
+    "error": "Kaut kas nogāja greizi. Lūdzu, mēģiniet vēlreiz.",
+    "subjects": {
+      "general": "Vispārīgs jautājums",
+      "quoteRequest": "Cenas pieprasījums",
+      "b2bPartnership": "B2B sadarbība",
+      "other": "Cits"
+    },
+    "howFoundOptions": {
+      "google": "Google meklēšana",
+      "referral": "Ieteikums",
+      "social": "Sociālie tīkli",
+      "other": "Cits"
+    },
+    "validation": {
+      "nameRequired": "Lūdzu, ievadiet savu vārdu",
+      "emailRequired": "Lūdzu, ievadiet savu e-pastu",
+      "emailInvalid": "Lūdzu, ievadiet derīgu e-pastu",
+      "messageRequired": "Lūdzu, ievadiet ziņojumu",
+      "messageTooShort": "Ziņojumam jābūt vismaz 20 rakstzīmēm"
+    }
+  },
+  "footer": {
+    "companyDescription": "Latvijas koka karkasa saliekamo māju ražotājs no Cēsīm. Kvalitatīvas skandināvu stila mājas ar piegādi visā Eiropā.",
+    "quickLinks": "Ātrās saites",
+    "contactInfo": "Kontaktinformācija",
+    "followUs": "Sekojiet mums",
+    "privacyPolicy": "Privātuma politika",
+    "termsOfService": "Lietošanas noteikumi",
+    "copyright": "© {year} Norge House SIA. Visas tiesības aizsargātas."
+  },
+  "cookie": {
+    "message": "Mēs izmantojam sīkdatnes, lai uzlabotu jūsu pieredzi. Turpinot apmeklēt šo vietni, jūs piekrītat sīkdatņu izmantošanai.",
+    "accept": "Pieņemt",
+    "decline": "Noraidīt",
+    "learnMore": "Uzzināt vairāk"
+  },
+  "projects": {
+    "title": "Mūsu projekti",
+    "filterAll": "Visi",
+    "filterSingleStorey": "Vienstāvu",
+    "filterTwoStorey": "Divstāvu",
+    "filterModule": "Modulis",
+    "filterCustom": "Individuāls",
+    "location": "Atrašanās vieta",
+    "area": "Platība",
+    "year": "Gads",
+    "type": "Tips"
+  },
+  "news": {
+    "title": "Jaunumi un aktualitātes",
+    "publishedOn": "Publicēts",
+    "by": "autors",
+    "tags": "Birkas",
+    "relatedArticles": "Saistītie raksti"
+  }
+}

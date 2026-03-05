@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "home": "Home",
+    "aboutUs": "Über uns",
+    "manufacturingKit": "Fertigungspaket",
+    "constructionStages": "Bauphasen",
+    "units": "Einheiten",
+    "materials": "Materialien",
+    "montage": "Montage",
+    "production": "Produktion",
+    "projects": "Projekte",
+    "galleries": "Galerie",
+    "b2b": "B2B",
+    "news": "Neuigkeiten",
+    "contacts": "Kontakte"
+  },
+  "common": {
+    "readMore": "Weiterlesen",
+    "viewAll": "Alle anzeigen",
+    "viewProject": "Projekt ansehen",
+    "loadMore": "Mehr laden",
+    "backToList": "Zurück zur Liste",
+    "learnMore": "Mehr erfahren",
+    "getInTouch": "Kontakt aufnehmen",
+    "requestQuote": "Angebot anfordern",
+    "noResults": "Keine Ergebnisse gefunden",
+    "close": "Schließen",
+    "next": "Weiter",
+    "previous": "Zurück"
+  },
+  "contact": {
+    "title": "Kontaktieren Sie uns",
+    "name": "Vollständiger Name",
+    "email": "E-Mail-Adresse",
+    "phone": "Telefonnummer",
+    "country": "Land",
+    "subject": "Betreff",
+    "message": "Nachricht",
+    "howFound": "Wie haben Sie uns gefunden?",
+    "submit": "Nachricht senden",
+    "sending": "Senden...",
+    "success": "Vielen Dank! Ihre Nachricht wurde gesendet. Wir werden uns in Kürze bei Ihnen melden.",
+    "error": "Etwas ist schief gelaufen. Bitte versuchen Sie es später erneut.",
+    "subjects": {
+      "general": "Allgemeine Anfrage",
+      "quoteRequest": "Angebotsanfrage",
+      "b2bPartnership": "B2B-Partnerschaft",
+      "other": "Sonstiges"
+    },
+    "howFoundOptions": {
+      "google": "Google-Suche",
+      "referral": "Empfehlung",
+      "social": "Soziale Medien",
+      "other": "Sonstiges"
+    },
+    "validation": {
+      "nameRequired": "Bitte geben Sie Ihren Namen ein",
+      "emailRequired": "Bitte geben Sie Ihre E-Mail ein",
+      "emailInvalid": "Bitte geben Sie eine gültige E-Mail ein",
+      "messageRequired": "Bitte geben Sie Ihre Nachricht ein",
+      "messageTooShort": "Die Nachricht muss mindestens 20 Zeichen lang sein"
+    }
+  },
+  "footer": {
+    "companyDescription": "Lettischer Hersteller von Holzrahmen-Fertighäusern aus Cēsis. Hochwertige Häuser im skandinavischen Stil, geliefert in ganz Europa.",
+    "quickLinks": "Schnelllinks",
+    "contactInfo": "Kontaktinfo",
+    "followUs": "Folgen Sie uns",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "termsOfService": "Nutzungsbedingungen",
+    "copyright": "© {year} Norge House SIA. Alle Rechte vorbehalten."
+  },
+  "cookie": {
+    "message": "Wir verwenden Cookies, um Ihre Erfahrung zu verbessern. Durch die weitere Nutzung dieser Website stimmen Sie der Verwendung von Cookies zu.",
+    "accept": "Akzeptieren",
+    "decline": "Ablehnen",
+    "learnMore": "Mehr erfahren"
+  },
+  "projects": {
+    "title": "Unsere Projekte",
+    "filterAll": "Alle",
+    "filterSingleStorey": "Eingeschossig",
+    "filterTwoStorey": "Zweigeschossig",
+    "filterModule": "Modul",
+    "filterCustom": "Individuell",
+    "location": "Standort",
+    "area": "Fläche",
+    "year": "Jahr",
+    "type": "Typ"
+  },
+  "news": {
+    "title": "Neuigkeiten & Updates",
+    "publishedOn": "Veröffentlicht am",
+    "by": "von",
+    "tags": "Tags",
+    "relatedArticles": "Verwandte Artikel"
+  }
+}

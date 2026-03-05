@@ -1,0 +1,7 @@
+{
+  "name": "@norgehouse/types",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./payload-types.ts",
+  "types": "./payload-types.ts"
+}

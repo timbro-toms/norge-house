@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "home": "Home",
+    "aboutUs": "Chi siamo",
+    "manufacturingKit": "Kit di produzione",
+    "constructionStages": "Fasi di costruzione",
+    "units": "Unità",
+    "materials": "Materiali",
+    "montage": "Montaggio",
+    "production": "Produzione",
+    "projects": "Progetti",
+    "galleries": "Galleria",
+    "b2b": "B2B",
+    "news": "Notizie",
+    "contacts": "Contatti"
+  },
+  "common": {
+    "readMore": "Leggi di più",
+    "viewAll": "Vedi tutti",
+    "viewProject": "Vedi progetto",
+    "loadMore": "Carica altro",
+    "backToList": "Torna alla lista",
+    "learnMore": "Scopri di più",
+    "getInTouch": "Contattaci",
+    "requestQuote": "Richiedi preventivo",
+    "noResults": "Nessun risultato trovato",
+    "close": "Chiudi",
+    "next": "Avanti",
+    "previous": "Indietro"
+  },
+  "contact": {
+    "title": "Contattaci",
+    "name": "Nome completo",
+    "email": "Indirizzo e-mail",
+    "phone": "Numero di telefono",
+    "country": "Paese",
+    "subject": "Oggetto",
+    "message": "Messaggio",
+    "howFound": "Come ci hai trovato?",
+    "submit": "Invia messaggio",
+    "sending": "Invio in corso...",
+    "success": "Grazie! Il tuo messaggio è stato inviato. Ti risponderemo a breve.",
+    "error": "Qualcosa è andato storto. Per favore riprova più tardi.",
+    "subjects": {
+      "general": "Richiesta generale",
+      "quoteRequest": "Richiesta preventivo",
+      "b2bPartnership": "Partnership B2B",
+      "other": "Altro"
+    },
+    "howFoundOptions": {
+      "google": "Ricerca Google",
+      "referral": "Passaparola",
+      "social": "Social media",
+      "other": "Altro"
+    },
+    "validation": {
+      "nameRequired": "Per favore inserisci il tuo nome",
+      "emailRequired": "Per favore inserisci la tua e-mail",
+      "emailInvalid": "Per favore inserisci un'e-mail valida",
+      "messageRequired": "Per favore inserisci il tuo messaggio",
+      "messageTooShort": "Il messaggio deve contenere almeno 20 caratteri"
+    }
+  },
+  "footer": {
+    "companyDescription": "Produttore lettone di case prefabbricate con struttura in legno, con sede a Cēsis. Case di qualità in stile scandinavo consegnate in tutta Europa.",
+    "quickLinks": "Link rapidi",
+    "contactInfo": "Informazioni di contatto",
+    "followUs": "Seguici",
+    "privacyPolicy": "Informativa sulla privacy",
+    "termsOfService": "Termini di servizio",
+    "copyright": "© {year} Norge House SIA. Tutti i diritti riservati."
+  },
+  "cookie": {
+    "message": "Utilizziamo i cookie per migliorare la tua esperienza. Continuando a visitare questo sito, accetti l'uso dei cookie.",
+    "accept": "Accetta",
+    "decline": "Rifiuta",
+    "learnMore": "Scopri di più"
+  },
+  "projects": {
+    "title": "I nostri progetti",
+    "filterAll": "Tutti",
+    "filterSingleStorey": "Piano singolo",
+    "filterTwoStorey": "Due piani",
+    "filterModule": "Modulo",
+    "filterCustom": "Personalizzato",
+    "location": "Posizione",
+    "area": "Superficie",
+    "year": "Anno",
+    "type": "Tipo"
+  },
+  "news": {
+    "title": "Notizie e aggiornamenti",
+    "publishedOn": "Pubblicato il",
+    "by": "di",
+    "tags": "Tag",
+    "relatedArticles": "Articoli correlati"
+  }
+}

@@ -1,0 +1,26 @@
+name: Deploy NorgeHouse
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy to DigitalOcean Droplet
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.DO_DROPLET_IP }}
+          username: root
+          key: ${{ secrets.DO_SSH_KEY }}
+          script: |
+            cd /var/www/norgehouse
+            git pull origin main
+            docker compose up --build -d
+            docker system prune -af --filter "until=24h"
+            sleep 5
+            curl -sf https://norgehouse.com > /dev/null && echo "Deploy OK" || echo "Health check failed"

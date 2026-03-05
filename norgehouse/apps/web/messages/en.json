@@ -1,0 +1,98 @@
+{
+  "nav": {
+    "home": "Home",
+    "aboutUs": "About Us",
+    "manufacturingKit": "Manufacturing Kit",
+    "constructionStages": "Construction Stages",
+    "units": "Units",
+    "materials": "Materials",
+    "montage": "Montage",
+    "production": "Production",
+    "projects": "Projects",
+    "galleries": "Galleries",
+    "b2b": "B2B",
+    "news": "News",
+    "contacts": "Contacts"
+  },
+  "common": {
+    "readMore": "Read More",
+    "viewAll": "View All",
+    "viewProject": "View Project",
+    "loadMore": "Load More",
+    "backToList": "Back to list",
+    "learnMore": "Learn More",
+    "getInTouch": "Get in Touch",
+    "requestQuote": "Request a Quote",
+    "noResults": "No results found",
+    "close": "Close",
+    "next": "Next",
+    "previous": "Previous"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "country": "Country",
+    "subject": "Subject",
+    "message": "Message",
+    "howFound": "How did you find us?",
+    "submit": "Send Message",
+    "sending": "Sending...",
+    "success": "Thank you! Your message has been sent. We will get back to you shortly.",
+    "error": "Something went wrong. Please try again later.",
+    "subjects": {
+      "general": "General Inquiry",
+      "quoteRequest": "Quote Request",
+      "b2bPartnership": "B2B Partnership",
+      "other": "Other"
+    },
+    "howFoundOptions": {
+      "google": "Google Search",
+      "referral": "Referral",
+      "social": "Social Media",
+      "other": "Other"
+    },
+    "validation": {
+      "nameRequired": "Please enter your name",
+      "emailRequired": "Please enter your email",
+      "emailInvalid": "Please enter a valid email",
+      "messageRequired": "Please enter your message",
+      "messageTooShort": "Message must be at least 20 characters"
+    }
+  },
+  "footer": {
+    "companyDescription": "Latvian timber-frame prefab house manufacturer based in Cēsis, Latvia. Quality Scandinavian-style homes delivered across Europe.",
+    "quickLinks": "Quick Links",
+    "contactInfo": "Contact Info",
+    "followUs": "Follow Us",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "copyright": "© {year} Norge House SIA. All rights reserved."
+  },
+  "cookie": {
+    "message": "We use cookies to improve your experience. By continuing to visit this site, you agree to our use of cookies.",
+    "accept": "Accept",
+    "decline": "Decline",
+    "learnMore": "Learn more"
+  },
+  "projects": {
+    "title": "Our Projects",
+    "filterAll": "All",
+    "filterSingleStorey": "Single Storey",
+    "filterTwoStorey": "Two Storey",
+    "filterModule": "Module",
+    "filterCustom": "Custom",
+    "location": "Location",
+    "area": "Area",
+    "year": "Year",
+    "type": "Type"
+  },
+  "news": {
+    "title": "News & Updates",
+    "publishedOn": "Published on",
+    "by": "by",
+    "tags": "Tags",
+    "relatedArticles": "Related Articles"
+  }
+}
