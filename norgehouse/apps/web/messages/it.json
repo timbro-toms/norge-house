@@ -59,7 +59,8 @@
       "emailInvalid": "Per favore inserisci un'e-mail valida",
       "messageRequired": "Per favore inserisci il tuo messaggio",
       "messageTooShort": "Il messaggio deve contenere almeno 20 caratteri"
-    }
+    },
+    "requiredFields": "Campi obbligatori"
   },
   "footer": {
     "companyDescription": "Produttore lettone di case prefabbricate con struttura in legno, con sede a Cēsis. Case di qualità in stile scandinavo consegnate in tutta Europa.",

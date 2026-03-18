@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getProject, getAllProjectSlugs } from '@/lib/payload'
 import { buildHreflangAlternates, getMediaUrl } from '@/lib/utils'
+import { RichText } from '@/components/RichText'
 
 interface Props {
   params: { locale: string; slug: string }
@@ -127,14 +128,7 @@ export default async function ProjectDetailPage({ params }: Props) {
           )}
         </div>
 
-        {project.description && (
-          <div className="prose max-w-3xl mb-12">
-            {/* Rich text content would be rendered with a serializer */}
-            <p className="text-brand-muted text-lg leading-relaxed">
-              {typeof project.description === 'string' ? project.description : 'Project details coming soon.'}
-            </p>
-          </div>
-        )}
+        <RichText content={project.description} className="prose max-w-3xl mb-12" />
 
         {project.gallery && project.gallery.length > 0 && (
           <div>

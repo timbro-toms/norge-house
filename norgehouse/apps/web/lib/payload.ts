@@ -127,11 +127,37 @@ interface SiteSettings {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Block = any
 
+/**
+ * Convert a nested object to bracket-notation query params.
+ * e.g. { slug: { equals: 'home' }, status: { equals: 'published' } }
+ * => where[slug][equals]=home&where[status][equals]=published
+ */
+function flattenToParams(prefix: string, obj: unknown, target: URLSearchParams): void {
+  if (obj === null || obj === undefined) return
+  if (typeof obj !== 'object') {
+    target.append(prefix, String(obj))
+    return
+  }
+  for (const [key, value] of Object.entries(obj as Record<string, unknown>)) {
+    flattenToParams(`${prefix}[${key}]`, value, target)
+  }
+}
+
 async function fetchPayload<T>(endpoint: string, params?: Record<string, string>): Promise<T> {
   const url = new URL(`${PAYLOAD_URL}/api${endpoint}`)
   if (params) {
     Object.entries(params).forEach(([key, value]) => {
-      url.searchParams.set(key, value)
+      if (key === 'where') {
+        // Convert JSON-stringified where to bracket notation for Payload REST API
+        try {
+          const parsed = JSON.parse(value)
+          flattenToParams('where', parsed, url.searchParams)
+        } catch {
+          url.searchParams.set(key, value)
+        }
+      } else {
+        url.searchParams.set(key, value)
+      }
     })
   }
 

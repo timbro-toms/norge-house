@@ -59,7 +59,8 @@
       "emailInvalid": "Please enter a valid email",
       "messageRequired": "Please enter your message",
       "messageTooShort": "Message must be at least 20 characters"
-    }
+    },
+    "requiredFields": "Required fields"
   },
   "footer": {
     "companyDescription": "Latvian timber-frame prefab house manufacturer based in Cēsis, Latvia. Quality Scandinavian-style homes delivered across Europe.",

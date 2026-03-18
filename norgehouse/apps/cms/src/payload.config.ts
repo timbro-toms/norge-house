@@ -1,4 +1,5 @@
 import { buildConfig } from 'payload'
+import sharp from 'sharp'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { seoPlugin } from '@payloadcms/plugin-seo'
@@ -15,6 +16,7 @@ import { Media } from './collections/Media'
 import { SiteSettings } from './globals/SiteSettings'
 
 export default buildConfig({
+  secret: process.env.PAYLOAD_SECRET || '',
   serverURL: process.env.NEXT_PUBLIC_SERVER_URL || 'http://localhost:3001',
   admin: {
     user: 'users',
@@ -87,6 +89,7 @@ export default buildConfig({
   typescript: {
     outputFile: '../../packages/types/payload-types.ts',
   },
+  sharp,
   upload: {
     limits: {
       fileSize: 10000000, // 10MB

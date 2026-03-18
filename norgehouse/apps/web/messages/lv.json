@@ -59,7 +59,8 @@
       "emailInvalid": "Lūdzu, ievadiet derīgu e-pastu",
       "messageRequired": "Lūdzu, ievadiet ziņojumu",
       "messageTooShort": "Ziņojumam jābūt vismaz 20 rakstzīmēm"
-    }
+    },
+    "requiredFields": "Obligātie lauki"
   },
   "footer": {
     "companyDescription": "Latvijas koka karkasa saliekamo māju ražotājs no Cēsīm. Kvalitatīvas skandināvu stila mājas ar piegādi visā Eiropā.",

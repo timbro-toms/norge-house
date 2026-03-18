@@ -59,7 +59,8 @@
       "emailInvalid": "Bitte geben Sie eine gültige E-Mail ein",
       "messageRequired": "Bitte geben Sie Ihre Nachricht ein",
       "messageTooShort": "Die Nachricht muss mindestens 20 Zeichen lang sein"
-    }
+    },
+    "requiredFields": "Pflichtfelder"
   },
   "footer": {
     "companyDescription": "Lettischer Hersteller von Holzrahmen-Fertighäusern aus Cēsis. Hochwertige Häuser im skandinavischen Stil, geliefert in ganz Europa.",

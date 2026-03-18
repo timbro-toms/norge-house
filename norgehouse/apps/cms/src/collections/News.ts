@@ -42,7 +42,6 @@ export const News: CollectionConfig = {
     {
       name: 'content',
       type: 'richText',
-      required: true,
       localized: true,
     },
     {

@@ -27,6 +27,13 @@ interface ContactFormBlockProps {
   }
 }
 
+const inputCls =
+  'w-full rounded-xl border-2 border-gray-200 bg-white px-4 py-3 text-brand-dark placeholder:text-gray-400 transition-all focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20 focus:shadow-md outline-none'
+const inputErrCls =
+  'w-full rounded-xl border-2 border-red-400 bg-white px-4 py-3 text-brand-dark placeholder:text-gray-400 transition-all focus:border-red-500 focus:ring-2 focus:ring-red-200 outline-none'
+const selectCls =
+  inputCls + ' appearance-none bg-[url("data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%23666%22%20viewBox%3D%220%200%2016%2016%22%3E%3Cpath%20d%3D%22M8%2011L3%206h10z%22%2F%3E%3C%2Fsvg%3E")] bg-[length:16px] bg-[right_12px_center] bg-no-repeat pr-10'
+
 export function ContactFormBlock({ block }: ContactFormBlockProps) {
   const t = useTranslations('contact')
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
@@ -61,62 +68,66 @@ export function ContactFormBlock({ block }: ContactFormBlockProps) {
   }
 
   return (
-    <div>
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 p-8 md:p-10">
       {block.heading && (
-        <h2 className="text-2xl font-heading font-bold mb-6">{block.heading}</h2>
+        <h2 className="text-2xl font-heading font-bold mb-2">{block.heading}</h2>
       )}
+      <p className="text-brand-muted text-sm mb-8">* {t('requiredFields')}</p>
 
       {status === 'success' ? (
-        <div className="bg-green-50 border border-green-200 rounded-lg p-6 text-green-800">
-          {block.successMessage || t('success')}
+        <div className="bg-green-50 border-2 border-green-200 rounded-xl p-8 text-center">
+          <svg className="w-12 h-12 mx-auto mb-4 text-green-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          <p className="text-lg font-semibold text-green-800">{block.successMessage || t('success')}</p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           {/* Honeypot */}
           <input type="text" {...register('honeypot')} className="hidden" tabIndex={-1} autoComplete="off" />
 
           <div>
-            <label className="block text-sm font-semibold mb-1">{t('name')} *</label>
+            <label className="block text-sm font-semibold text-brand-dark mb-2">{t('name')} *</label>
             <input
               {...register('name')}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+              className={errors.name ? inputErrCls : inputCls}
             />
-            {errors.name && <p className="text-red-500 text-sm mt-1">{t('validation.nameRequired')}</p>}
+            {errors.name && <p className="text-red-500 text-xs mt-1.5">{t('validation.nameRequired')}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-semibold mb-1">{t('email')} *</label>
+            <label className="block text-sm font-semibold text-brand-dark mb-2">{t('email')} *</label>
             <input
               type="email"
               {...register('email')}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+              className={errors.email ? inputErrCls : inputCls}
             />
-            {errors.email && <p className="text-red-500 text-sm mt-1">{t('validation.emailInvalid')}</p>}
+            {errors.email && <p className="text-red-500 text-xs mt-1.5">{t('validation.emailInvalid')}</p>}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-semibold mb-1">{t('phone')}</label>
+              <label className="block text-sm font-semibold text-brand-dark mb-2">{t('phone')}</label>
               <input
                 type="tel"
                 {...register('phone')}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+                className={inputCls}
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold mb-1">{t('country')}</label>
+              <label className="block text-sm font-semibold text-brand-dark mb-2">{t('country')}</label>
               <input
                 {...register('country')}
-                className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+                className={inputCls}
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-sm font-semibold mb-1">{t('subject')}</label>
+            <label className="block text-sm font-semibold text-brand-dark mb-2">{t('subject')}</label>
             <select
               {...register('subject')}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+              className={selectCls}
             >
               <option value="general">{t('subjects.general')}</option>
               <option value="quote-request">{t('subjects.quoteRequest')}</option>
@@ -126,20 +137,20 @@ export function ContactFormBlock({ block }: ContactFormBlockProps) {
           </div>
 
           <div>
-            <label className="block text-sm font-semibold mb-1">{t('message')} *</label>
+            <label className="block text-sm font-semibold text-brand-dark mb-2">{t('message')} *</label>
             <textarea
               {...register('message')}
-              rows={5}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none resize-vertical"
+              rows={6}
+              className={(errors.message ? inputErrCls : inputCls) + ' resize-vertical'}
             />
-            {errors.message && <p className="text-red-500 text-sm mt-1">{t('validation.messageTooShort')}</p>}
+            {errors.message && <p className="text-red-500 text-xs mt-1.5">{t('validation.messageTooShort')}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-semibold mb-1">{t('howFound')}</label>
+            <label className="block text-sm font-semibold text-brand-dark mb-2">{t('howFound')}</label>
             <select
               {...register('howFound')}
-              className="w-full rounded-lg border border-gray-300 px-4 py-2.5 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none"
+              className={selectCls}
             >
               <option value="">--</option>
               <option value="google">{t('howFoundOptions.google')}</option>
@@ -150,7 +161,7 @@ export function ContactFormBlock({ block }: ContactFormBlockProps) {
           </div>
 
           {status === 'error' && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 text-red-800 text-sm">
+            <div className="bg-red-50 border-2 border-red-200 rounded-xl p-5 text-red-800 text-sm">
               {t('error')}
             </div>
           )}
@@ -158,7 +169,7 @@ export function ContactFormBlock({ block }: ContactFormBlockProps) {
           <button
             type="submit"
             disabled={status === 'sending'}
-            className="w-full bg-brand-primary text-brand-dark font-semibold py-3 rounded-lg hover:bg-brand-primary/90 transition-colors disabled:opacity-50"
+            className="w-full bg-brand-primary text-brand-dark font-bold py-4 rounded-xl hover:bg-brand-primary/90 active:scale-[0.98] transition-all disabled:opacity-50 text-lg shadow-md shadow-brand-primary/20"
           >
             {status === 'sending' ? t('sending') : t('submit')}
           </button>

@@ -67,7 +67,7 @@ export const FeatureGridBlock: Block = {
       type: 'array',
       fields: [
         { name: 'icon', type: 'text' },
-        { name: 'title', type: 'text', localized: true, required: true },
+        { name: 'title', type: 'text', localized: true },
         { name: 'body', type: 'textarea', localized: true },
       ],
     },
@@ -94,7 +94,7 @@ export const StepProcessBlock: Block = {
       type: 'array',
       fields: [
         { name: 'number', type: 'number' },
-        { name: 'title', type: 'text', localized: true, required: true },
+        { name: 'title', type: 'text', localized: true },
         { name: 'body', type: 'textarea', localized: true },
         { name: 'image', type: 'upload', relationTo: 'media' },
       ],
@@ -132,7 +132,7 @@ export const CTABannerBlock: Block = {
   slug: 'ctaBanner',
   labels: { singular: 'CTA Banner', plural: 'CTA Banners' },
   fields: [
-    { name: 'heading', type: 'text', localized: true, required: true },
+    { name: 'heading', type: 'text', localized: true },
     { name: 'subheading', type: 'text', localized: true },
     { name: 'ctaLabel', type: 'text', localized: true },
     { name: 'ctaHref', type: 'text' },
@@ -160,7 +160,7 @@ export const StatsBlock: Block = {
       type: 'array',
       fields: [
         { name: 'value', type: 'number', required: true },
-        { name: 'label', type: 'text', localized: true, required: true },
+        { name: 'label', type: 'text', localized: true },
         { name: 'suffix', type: 'text' },
         { name: 'prefix', type: 'text' },
       ],
@@ -177,8 +177,8 @@ export const AccordionBlock: Block = {
       name: 'items',
       type: 'array',
       fields: [
-        { name: 'question', type: 'text', localized: true, required: true },
-        { name: 'answer', type: 'richText', localized: true, required: true },
+        { name: 'question', type: 'text', localized: true },
+        { name: 'answer', type: 'richText', localized: true },
       ],
     },
   ],
@@ -272,7 +272,7 @@ export const RichTextBlock: Block = {
   slug: 'richText',
   labels: { singular: 'Rich Text', plural: 'Rich Text' },
   fields: [
-    { name: 'content', type: 'richText', localized: true, required: true },
+    { name: 'content', type: 'richText', localized: true },
   ],
 }
 

@@ -11,6 +11,7 @@ import { AccordionBlock } from './AccordionBlock'
 import { VideoEmbedBlock } from './VideoEmbedBlock'
 import { ContactFormBlock } from './ContactFormBlock'
 import { MapBlock } from './MapBlock'
+import { RichText } from '../RichText'
 
 interface BlockRendererProps {
   blocks: Array<{ blockType: string; [key: string]: unknown }>
@@ -30,9 +31,7 @@ const blockComponents: Record<string, React.ComponentType<{ block: Record<string
   map: MapBlock as React.ComponentType<{ block: Record<string, unknown> }>,
   richText: ({ block }: { block: Record<string, unknown> }) => (
     <section className="container-page py-12">
-      <div className="prose max-w-3xl mx-auto">
-        {typeof block.content === 'string' ? <p>{block.content}</p> : null}
-      </div>
+      <RichText content={block.content} className="prose max-w-3xl mx-auto" />
     </section>
   ),
   projectsTeaser: ({ block }: { block: Record<string, unknown> }) => (

@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getArticle, getAllNewsSlugs } from '@/lib/payload'
 import { buildHreflangAlternates, getMediaUrl } from '@/lib/utils'
+import { RichText } from '@/components/RichText'
 
 interface Props {
   params: { locale: string; slug: string }
@@ -96,13 +97,7 @@ export default async function ArticlePage({ params }: Props) {
 
           <h1 className="text-3xl md:text-4xl font-heading font-bold mb-8">{article.title}</h1>
 
-          <div className="prose">
-            {typeof article.content === 'string' ? (
-              <p>{article.content}</p>
-            ) : (
-              <p className="text-brand-muted">Article content.</p>
-            )}
-          </div>
+          <RichText content={article.content} className="prose max-w-none" />
 
           {article.tags && article.tags.length > 0 && (
             <div className="mt-8 flex flex-wrap gap-2">
