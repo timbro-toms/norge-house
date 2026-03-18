@@ -27,8 +27,8 @@ services:
     environment:
       DATABASE_URI: postgresql://${POSTGRES_USER:-norgehouse}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-norgehouse}
       PAYLOAD_SECRET: ${PAYLOAD_SECRET:?Set PAYLOAD_SECRET in .env}
-      NEXT_PUBLIC_SERVER_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
-      PAYLOAD_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
+      NEXT_PUBLIC_SERVER_URL: ${PUBLIC_URL:-https://wooden-houses.itlinden.lv}
+      PAYLOAD_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.itlinden.lv}
     volumes:
       - cms_media:/app/apps/cms/media
     networks:
@@ -41,14 +41,14 @@ services:
       context: .
       dockerfile: apps/web/Dockerfile
       args:
-        NEXT_PUBLIC_PAYLOAD_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
-        NEXT_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
+        NEXT_PUBLIC_PAYLOAD_URL: ${PUBLIC_URL:-https://wooden-houses.itlinden.lv}
+        NEXT_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.itlinden.lv}
     restart: unless-stopped
     depends_on:
       - cms
     environment:
       NEXT_PUBLIC_PAYLOAD_URL: http://cms:3001
-      NEXT_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
+      NEXT_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.itlinden.lv}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-noreply@norgehouse.com}
       RESEND_TO_EMAIL: ${RESEND_TO_EMAIL:-info@norgehouse.com}

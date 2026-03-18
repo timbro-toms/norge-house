@@ -7,7 +7,7 @@ set -euo pipefail
 # Prerequisites:
 #   - Docker already installed (existing n8n setup)
 #   - Caddy already running as reverse proxy
-#   - DNS A record for wooden-houses.linden.lv → droplet IP
+#   - DNS A record for wooden-houses.itlinden.lv → droplet IP
 
 INSTALL_DIR="/opt/norgehouse"
 REPO_URL="https://github.com/timbro-toms/norge-house.git"
@@ -68,7 +68,7 @@ echo ""
 echo "==> Next steps:"
 echo "  1. Add Caddy config (see scripts/caddy-norgehouse.txt)"
 echo "  2. Reload Caddy: docker exec <caddy-container> caddy reload --config /etc/caddy/Caddyfile"
-echo "  3. Visit https://wooden-houses.linden.lv"
+echo "  3. Visit https://wooden-houses.itlinden.lv"
 echo ""
 echo "==> To deploy updates later:"
 echo "  cd ${INSTALL_DIR}/norgehouse && git pull origin main && docker compose -f docker-compose.prod.yml up --build -d"

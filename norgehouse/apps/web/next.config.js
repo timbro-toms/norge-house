@@ -13,7 +13,7 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'wooden-houses.linden.lv',
+        hostname: 'wooden-houses.itlinden.lv',
       },
       {
         protocol: 'http',
