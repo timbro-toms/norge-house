@@ -22,13 +22,17 @@ RUN pnpm build
 FROM base AS production
 WORKDIR /app
 ENV NODE_ENV=production
-COPY package.json pnpm-lock.yaml* ./
+
+COPY --from=builder /app/package.json /app/pnpm-lock.yaml* ./
 RUN pnpm install --frozen-lockfile --prod
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/src/seed ./src/seed
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/src ./src
+COPY --from=builder /app/next.config.mjs ./
+COPY --from=builder /app/tsconfig.json ./
 
 RUN mkdir -p /app/media
 VOLUME /app/media
 
 EXPOSE 3001
-CMD ["sh", "-c", "node dist/server.js"]
+CMD ["pnpm", "start"]

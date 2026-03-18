@@ -1,0 +1,39 @@
+# Add this block to your existing Caddyfile (alongside n8n config)
+# Location: find with `docker exec <caddy-container> cat /etc/caddy/Caddyfile`
+
+wooden-houses.linden.lv {
+	# Payload CMS admin & API
+	handle /admin* {
+		reverse_proxy localhost:3001
+	}
+	handle /api* {
+		reverse_proxy localhost:3001
+	}
+	handle /media* {
+		reverse_proxy localhost:3001
+	}
+
+	# Next.js frontend
+	handle {
+		reverse_proxy localhost:3000
+	}
+}
+
+# When switching to production, add:
+# norgehouse.com, www.norgehouse.com {
+# 	@www host www.norgehouse.com
+# 	redir @www https://norgehouse.com{uri} permanent
+#
+# 	handle /admin* {
+# 		reverse_proxy localhost:3001
+# 	}
+# 	handle /api* {
+# 		reverse_proxy localhost:3001
+# 	}
+# 	handle /media* {
+# 		reverse_proxy localhost:3001
+# 	}
+# 	handle {
+# 		reverse_proxy localhost:3000
+# 	}
+# }

@@ -1,0 +1,56 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-norgehouse}
+      POSTGRES_USER: ${POSTGRES_USER:-norgehouse}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-norgehouse}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  cms:
+    build:
+      context: ./apps/cms
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URI: postgresql://${POSTGRES_USER:-norgehouse}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-norgehouse}
+      PAYLOAD_SECRET: ${PAYLOAD_SECRET:?Set PAYLOAD_SECRET in .env}
+      NEXT_PUBLIC_SERVER_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
+      PAYLOAD_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
+    volumes:
+      - cms_media:/app/media
+    ports:
+      - "127.0.0.1:3001:3001"
+
+  web:
+    build:
+      context: ./apps/web
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_PAYLOAD_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
+        NEXT_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
+    restart: unless-stopped
+    depends_on:
+      - cms
+    environment:
+      NEXT_PUBLIC_PAYLOAD_URL: http://cms:3001
+      NEXT_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
+      RESEND_API_KEY: ${RESEND_API_KEY:-}
+      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-noreply@norgehouse.com}
+      RESEND_TO_EMAIL: ${RESEND_TO_EMAIL:-info@norgehouse.com}
+    ports:
+      - "127.0.0.1:3000:3000"
+
+volumes:
+  postgres_data:
+  cms_media:
