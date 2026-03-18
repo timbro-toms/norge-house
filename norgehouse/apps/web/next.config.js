@@ -12,6 +12,10 @@ const nextConfig = {
         hostname: 'norgehouse.com',
       },
       {
+        protocol: 'https',
+        hostname: 'wooden-houses.linden.lv',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         port: '3001',
