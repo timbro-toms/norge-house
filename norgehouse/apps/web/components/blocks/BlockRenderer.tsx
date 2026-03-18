@@ -36,19 +36,19 @@ const blockComponents: Record<string, React.ComponentType<{ block: Record<string
   ),
   projectsTeaser: ({ block }: { block: Record<string, unknown> }) => (
     <section className="container-page py-16">
-      {block.heading && <h2 className="text-3xl font-heading font-bold text-center mb-10">{block.heading as string}</h2>}
+      {typeof block.heading === 'string' && <h2 className="text-3xl font-heading font-bold text-center mb-10">{block.heading}</h2>}
       <p className="text-center text-brand-muted">Projects loaded dynamically from CMS.</p>
     </section>
   ),
   newsTeaser: ({ block }: { block: Record<string, unknown> }) => (
     <section className="container-page py-16">
-      {block.heading && <h2 className="text-3xl font-heading font-bold text-center mb-10">{block.heading as string}</h2>}
+      {typeof block.heading === 'string' && <h2 className="text-3xl font-heading font-bold text-center mb-10">{block.heading}</h2>}
       <p className="text-center text-brand-muted">News loaded dynamically from CMS.</p>
     </section>
   ),
   partners: ({ block }: { block: Record<string, unknown> }) => (
     <section className="container-page py-16">
-      {block.heading && <h2 className="text-3xl font-heading font-bold text-center mb-10">{block.heading as string}</h2>}
+      {typeof block.heading === 'string' && <h2 className="text-3xl font-heading font-bold text-center mb-10">{block.heading}</h2>}
       <div className="flex flex-wrap justify-center items-center gap-8">
         {Array.isArray(block.logos) &&
           block.logos.map((logo: { name?: string; image?: { url?: string }; url?: string }, idx: number) => (
