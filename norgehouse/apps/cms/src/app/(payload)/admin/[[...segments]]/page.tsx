@@ -1,15 +1,11 @@
+/* THIS FILE WAS GENERATED AUTOMATICALLY BY PAYLOAD. */
 import config from '@payload-config'
 import { importMap } from '../importMap'
-import {
-  DefaultTemplate,
-  MinimalTemplate,
-} from '@payloadcms/next/templates'
 import {
   generatePageMetadata,
   RootPage,
 } from '@payloadcms/next/views'
 import type { Metadata } from 'next'
-import React from 'react'
 
 type Args = {
   params: Promise<{
