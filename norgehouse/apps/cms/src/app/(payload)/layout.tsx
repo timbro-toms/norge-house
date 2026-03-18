@@ -2,7 +2,6 @@ import type { ServerFunctionClient } from 'payload'
 import config from '@payload-config'
 import { RootLayout, handleServerFunctions } from '@payloadcms/next/layouts'
 import React from 'react'
-// @ts-expect-error -- generated as .js by Payload
 import { importMap } from './admin/importMap.js'
 import '@payloadcms/next/css'
 
