@@ -8,6 +8,8 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env}
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - internal
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-norgehouse}"]
       interval: 10s
@@ -16,8 +18,8 @@ services:
 
   cms:
     build:
-      context: ./apps/cms
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/cms/Dockerfile
     restart: unless-stopped
     depends_on:
       postgres:
@@ -28,14 +30,16 @@ services:
       NEXT_PUBLIC_SERVER_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
       PAYLOAD_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
     volumes:
-      - cms_media:/app/media
+      - cms_media:/app/apps/cms/media
+    networks:
+      - internal
     ports:
       - "127.0.0.1:3001:3001"
 
   web:
     build:
-      context: ./apps/web
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: apps/web/Dockerfile
       args:
         NEXT_PUBLIC_PAYLOAD_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
         NEXT_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.linden.lv}
@@ -48,8 +52,14 @@ services:
       RESEND_API_KEY: ${RESEND_API_KEY:-}
       RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-noreply@norgehouse.com}
       RESEND_TO_EMAIL: ${RESEND_TO_EMAIL:-info@norgehouse.com}
+    networks:
+      - internal
     ports:
       - "127.0.0.1:3000:3000"
+
+networks:
+  internal:
+    driver: bridge
 
 volumes:
   postgres_data:
