@@ -26,7 +26,6 @@ ENV NODE_ENV=production
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=deps /app/apps/cms/node_modules ./apps/cms/node_modules
 COPY --from=builder /app/apps/cms/.next ./apps/cms/.next
-COPY --from=builder /app/apps/cms/public ./apps/cms/public
 COPY --from=builder /app/apps/cms/src ./apps/cms/src
 COPY --from=builder /app/apps/cms/next.config.mjs ./apps/cms/
 COPY --from=builder /app/apps/cms/tsconfig.json ./apps/cms/
