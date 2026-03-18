@@ -1,5 +1,3 @@
-import type { AdminViewServerProps } from 'payload'
-import { RenderServerComponent } from '@payloadcms/next/utilities'
 import config from '@payload-config'
 import { importMap } from '../importMap'
 import {
