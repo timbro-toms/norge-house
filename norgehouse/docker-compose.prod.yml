@@ -27,12 +27,13 @@ services:
     environment:
       DATABASE_URI: postgresql://${POSTGRES_USER:-norgehouse}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB:-norgehouse}
       PAYLOAD_SECRET: ${PAYLOAD_SECRET:?Set PAYLOAD_SECRET in .env}
-      NEXT_PUBLIC_SERVER_URL: ${PUBLIC_URL:-https://wooden-houses.itlinden.lv}
+      NEXT_PUBLIC_SERVER_URL: ${CMS_URL:-https://cms.wooden-houses.itlinden.lv}
       PAYLOAD_PUBLIC_SITE_URL: ${PUBLIC_URL:-https://wooden-houses.itlinden.lv}
     volumes:
       - cms_media:/app/apps/cms/media
     networks:
       - internal
+      - caddy
     ports:
       - "127.0.0.1:3001:3001"
 
@@ -54,12 +55,16 @@ services:
       RESEND_TO_EMAIL: ${RESEND_TO_EMAIL:-info@norgehouse.com}
     networks:
       - internal
+      - caddy
     ports:
       - "127.0.0.1:3000:3000"
 
 networks:
   internal:
     driver: bridge
+  caddy:
+    external: true
+    name: n8n-docker-caddy_default
 
 volumes:
   postgres_data:
