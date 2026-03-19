@@ -16,6 +16,10 @@ const nextConfig = {
         hostname: 'wooden-houses.itlinden.lv',
       },
       {
+        protocol: 'https',
+        hostname: 'cms.wooden-houses.itlinden.lv',
+      },
+      {
         protocol: 'http',
         hostname: 'localhost',
         port: '3001',
