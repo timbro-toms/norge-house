@@ -10,14 +10,7 @@ interface Props {
   params: { locale: string; slug: string }
 }
 
-export async function generateStaticParams() {
-  try {
-    const slugs = await getAllProjectSlugs()
-    return slugs.map(({ slug, locale }) => ({ slug, locale }))
-  } catch {
-    return []
-  }
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const project = await getProject(params.slug, params.locale)
